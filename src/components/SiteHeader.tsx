@@ -5,14 +5,16 @@ const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between gap-6">
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-foreground text-background font-display text-lg font-semibold">
+        <Link to="/" className="flex items-center gap-3 group">
+          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-accent text-accent-foreground font-display text-xl font-semibold shadow-soft transition-transform group-hover:-rotate-3">
             c
           </span>
-          <div className="leading-tight">
-            <p className="font-display text-base font-semibold">Conectado</p>
-            <p className="flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-              <MapPin className="h-3 w-3" /> em Sergipe
+          <div className="leading-none">
+            <p className="font-display text-xl font-semibold tracking-tight">
+              Conectado <span className="italic font-medium text-accent">em Sergipe</span>
+            </p>
+            <p className="mt-1 flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              <MapPin className="h-3 w-3 text-accent" /> Vitrine local
             </p>
           </div>
         </Link>
