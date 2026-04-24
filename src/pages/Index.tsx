@@ -8,10 +8,19 @@ import { Button } from "@/components/ui/button";
 import { categories, listings, stats } from "@/data/mock";
 import heroImg from "@/assets/hero-orla.jpg";
 
-const heroPhrases = [
-  "Pare de perder tempo procurando! No Conectado em Sergipe você encontra, em segundos.",
-  "Encontre serviços perto de você sem complicação.",
-  "Com o Conectado em Sergipe, você conecta rapidamente com profissionais.",
+const heroPhrases: { lead: string; highlight: string }[] = [
+  {
+    lead: "Pare de perder tempo procurando! No Conectado em Sergipe você encontra,",
+    highlight: "em segundos.",
+  },
+  {
+    lead: "Encontre serviços perto de você",
+    highlight: "sem complicação.",
+  },
+  {
+    lead: "Com o Conectado em Sergipe, você conecta rapidamente com",
+    highlight: "profissionais.",
+  },
 ];
 
 const Index = () => {
@@ -52,19 +61,20 @@ const Index = () => {
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
               <Sparkles className="h-3.5 w-3.5" /> Conecta · Vitrine local
             </span>
-            <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-              A vitrine oficial dos{" "}
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                serviços de Sergipe
-              </span>
-            </h1>
-            <p
+            <h1
               key={phraseIndex}
-              className={`mt-5 min-h-[3.5rem] max-w-xl text-base text-muted-foreground transition-opacity duration-500 md:text-lg ${
+              className={`mt-5 min-h-[12rem] text-3xl font-bold leading-[1.1] tracking-tight transition-opacity duration-500 md:min-h-[14rem] md:text-4xl lg:text-5xl ${
                 fade ? "opacity-100" : "opacity-0"
               }`}
             >
-              {heroPhrases[phraseIndex]}
+              {heroPhrases[phraseIndex].lead}{" "}
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                {heroPhrases[phraseIndex].highlight}
+              </span>
+            </h1>
+            <p className="mt-4 max-w-xl text-sm text-muted-foreground md:text-base">
+              Encontre eletricistas, diaristas, confeiteiros, fotógrafos e muito
+              mais — todos reunidos em um só lugar, com contato direto pelo WhatsApp.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
