@@ -1,132 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Search, Sparkles, TrendingUp, Star } from "lucide-react";
+import { Search, TrendingUp, Star } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import HeroCarousel from "@/components/HeroCarousel";
 import ListingCard from "@/components/ListingCard";
 import { Button } from "@/components/ui/button";
-import { categories, listings, stats } from "@/data/mock";
-import heroImg from "@/assets/hero-orla.jpg";
-
-const heroPhrases: { lead: string; highlight: string }[] = [
-  {
-    lead: "Pare de perder tempo procurando! No Conectado em Sergipe você encontra,",
-    highlight: "em segundos.",
-  },
-  {
-    lead: "Encontre serviços perto de você",
-    highlight: "sem complicação.",
-  },
-  {
-    lead: "Com o Conectado em Sergipe, você conecta rapidamente com",
-    highlight: "profissionais.",
-  },
-];
+import { categories, listings } from "@/data/mock";
 
 const Index = () => {
   const featured = listings.filter((l) => l.featured);
   const trending = [...listings, ...listings].slice(0, 8);
 
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [fade, setFade] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setPhraseIndex((i) => (i + 1) % heroPhrases.length);
-        setFade(true);
-      }, 400);
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img
-            src={heroImg}
-            alt="Orla de Aracaju, Sergipe"
-            className="h-full w-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background" />
-        </div>
-
-        <div className="container grid gap-12 py-16 md:grid-cols-2 md:py-24 lg:py-28">
-          <div className="flex flex-col justify-center">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> Conecta · Vitrine local
-            </span>
-            <h1
-              key={phraseIndex}
-              className={`mt-5 min-h-[12rem] text-3xl font-bold leading-[1.1] tracking-tight transition-opacity duration-500 md:min-h-[14rem] md:text-4xl lg:text-5xl ${
-                fade ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              {heroPhrases[phraseIndex].lead}{" "}
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                {heroPhrases[phraseIndex].highlight}
-              </span>
-            </h1>
-            <p className="mt-4 max-w-xl text-sm text-muted-foreground md:text-base">
-              Encontre eletricistas, diaristas, confeiteiros, fotógrafos e muito
-              mais — todos reunidos em um só lugar, com contato direto pelo WhatsApp.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full shadow-glow">
-                <Link to="/buscar">
-                  Explorar categorias <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full">
-                <Link to="/anunciar">Quero anunciar</Link>
-              </Button>
-            </div>
-
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-border/60 pt-6">
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Prestadores</dt>
-                <dd className="mt-1 text-2xl font-bold">{stats.providers}</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Categorias</dt>
-                <dd className="mt-1 text-2xl font-bold">{stats.categories}</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Cidades</dt>
-                <dd className="mt-1 text-2xl font-bold">{stats.cities}</dd>
-              </div>
-            </dl>
-          </div>
-
-          {/* Hero card collage */}
-          <div className="relative hidden md:block">
-            <div className="absolute -right-8 top-4 h-72 w-72 rounded-3xl bg-gradient-sun opacity-20 blur-3xl" />
-            <div className="absolute -left-4 bottom-8 h-72 w-72 rounded-3xl bg-primary/30 opacity-30 blur-3xl" />
-            <div className="relative grid grid-cols-2 gap-4">
-              <img src={heroImg} alt="" className="aspect-[3/4] rounded-3xl object-cover shadow-card" />
-              <div className="mt-12 grid gap-4">
-                <img src={listings[1].image} alt="" loading="lazy" className="aspect-square rounded-3xl object-cover shadow-card" />
-                <img src={listings[4].image} alt="" loading="lazy" className="aspect-square rounded-3xl object-cover shadow-card" />
-              </div>
-            </div>
-            <div className="absolute -bottom-4 left-6 flex items-center gap-3 rounded-2xl bg-card px-4 py-3 shadow-card">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-hero">
-                <Sparkles className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <div className="text-xs">
-                <div className="font-semibold">Vitrine oficial</div>
-                <div className="text-muted-foreground">de serviços locais</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       {/* CATEGORY QUICK BAR */}
       <section className="container -mt-4 pb-12">
