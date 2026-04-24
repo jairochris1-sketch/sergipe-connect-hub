@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Search, Sparkles, TrendingUp, Star } from "lucide-react";
 import Header from "@/components/Header";
@@ -7,9 +8,29 @@ import { Button } from "@/components/ui/button";
 import { categories, listings, stats } from "@/data/mock";
 import heroImg from "@/assets/hero-orla.jpg";
 
+const heroPhrases = [
+  "Pare de perder tempo procurando! No Conectado em Sergipe você encontra, em segundos.",
+  "Encontre serviços perto de você sem complicação.",
+  "Com o Conectado em Sergipe, você conecta rapidamente com profissionais.",
+];
+
 const Index = () => {
   const featured = listings.filter((l) => l.featured);
   const trending = [...listings, ...listings].slice(0, 8);
+
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setPhraseIndex((i) => (i + 1) % heroPhrases.length);
+        setFade(true);
+      }, 400);
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,9 +58,13 @@ const Index = () => {
                 serviços de Sergipe
               </span>
             </h1>
-            <p className="mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
-              Encontre eletricistas, diaristas, confeiteiros, fotógrafos e muito
-              mais — todos reunidos em um só lugar, com contato direto pelo WhatsApp.
+            <p
+              key={phraseIndex}
+              className={`mt-5 min-h-[3.5rem] max-w-xl text-base text-muted-foreground transition-opacity duration-500 md:text-lg ${
+                fade ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {heroPhrases[phraseIndex]}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
