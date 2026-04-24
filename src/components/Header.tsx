@@ -23,8 +23,8 @@ const Header = () => {
         <nav className="hidden items-center gap-1 md:flex">
           {[
             { to: "/buscar", label: "Buscar" },
-            { to: "/lojas", label: "Lojas" },
-            { to: "/anunciar", label: "Anunciar" },
+            { to: "/painel", label: "Painel" },
+            { to: "/login", label: "Login" },
           ].map((l) => (
             <NavLink
               key={l.to}
