@@ -194,10 +194,18 @@ const Painel = () => {
                 <div>
                   <h3 className="text-lg font-semibold">Imagens do carrossel da home</h3>
                   <p className="text-sm text-muted-foreground">
-                    Atualize as 3 imagens e os textos que aparecem na página inicial.
+                    Até 5 slides. Atualize as imagens e textos exibidos na página inicial. ({slides.length}/5)
                   </p>
                 </div>
                 <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={addSlide}
+                    disabled={slides.length >= 5}
+                  >
+                    <Plus className="mr-1 h-4 w-4" /> Adicionar slide
+                  </Button>
                   <Button variant="outline" className="rounded-full" onClick={restoreCarousel}>
                     <RotateCcw className="mr-1 h-4 w-4" /> Restaurar
                   </Button>
@@ -210,8 +218,19 @@ const Painel = () => {
               <div className="mt-6 grid gap-6 md:grid-cols-3">
                 {slides.map((s, i) => (
                   <div key={i} className="rounded-2xl border border-border/60 bg-background p-4">
-                    <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                      Slide {i + 1}
+                    <div className="mb-3 flex items-center justify-between">
+                      <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                        Slide {i + 1}
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 w-7 p-0 text-destructive hover:text-destructive"
+                        onClick={() => removeSlide(i)}
+                        aria-label="Remover slide"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                     <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
                       <img src={s.image} alt={`Slide ${i + 1}`} className="h-full w-full object-cover" />
