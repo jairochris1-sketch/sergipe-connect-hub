@@ -2,46 +2,33 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroCity from "@/assets/hero-city.jpg";
-import heroBeach from "@/assets/hero-beach.jpg";
-import heroPros from "@/assets/hero-pros.jpg";
-
-type Slide = {
-  image: string;
-  lead: string;
-  highlight: string;
-};
-
-const slides: Slide[] = [
-  {
-    image: heroCity,
-    lead: "Pare de perder tempo procurando! No Conectado em Sergipe você encontra,",
-    highlight: "em segundos.",
-  },
-  {
-    image: heroBeach,
-    lead: "Encontre serviços perto de você",
-    highlight: "sem complicação.",
-  },
-  {
-    image: heroPros,
-    lead: "Com o Conectado em Sergipe, você conecta rapidamente com",
-    highlight: "profissionais.",
-  },
-];
+import { loadSlides, type HeroSlide } from "@/data/heroSlides";
 
 const HeroCarousel = () => {
   const [index, setIndex] = useState(0);
+  const [slides, setSlides] = useState<HeroSlide[]>(() => loadSlides());
+
+  useEffect(() => {
+    const refresh = () => setSlides(loadSlides());
+    window.addEventListener("ces_hero_slides_updated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("ces_hero_slides_updated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, []);
 
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % slides.length);
     }, 60000);
     return () => clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   const go = (delta: number) =>
     setIndex((i) => (i + delta + slides.length) % slides.length);
+
+  const current = slides[index] ?? slides[0];
 
   return (
     <section className="relative h-[640px] w-full overflow-hidden md:h-[680px]">
@@ -65,9 +52,9 @@ const HeroCarousel = () => {
 
       <div className="container relative z-10 flex h-full max-w-6xl flex-col justify-center">
         <h1 className="max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
-          {slides[index].lead}{" "}
+          {current.lead}{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {slides[index].highlight}
+            {current.highlight}
           </span>
         </h1>
         <p className="mt-5 max-w-xl text-base text-muted-foreground md:text-lg">
@@ -86,7 +73,6 @@ const HeroCarousel = () => {
         </div>
       </div>
 
-      {/* arrows */}
       <button
         onClick={() => go(-1)}
         aria-label="Slide anterior"
@@ -102,7 +88,6 @@ const HeroCarousel = () => {
         <ChevronRight className="h-5 w-5" />
       </button>
 
-      {/* dots */}
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
         {slides.map((_, i) => (
           <button
