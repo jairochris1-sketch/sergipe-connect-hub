@@ -47,6 +47,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* FEATURED MOVING CAROUSEL */}
+      <FeaturedMarquee />
+
       {/* TRENDING */}
       <section className="container py-12">
         <div className="mb-6 flex items-end justify-between gap-4">
