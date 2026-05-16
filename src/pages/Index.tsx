@@ -3,6 +3,7 @@ import { Search, TrendingUp, Star } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroCarousel from "@/components/HeroCarousel";
+import FeaturedMarquee from "@/components/FeaturedMarquee";
 import ListingCard from "@/components/ListingCard";
 import { Button } from "@/components/ui/button";
 import { categories, listings } from "@/data/mock";
