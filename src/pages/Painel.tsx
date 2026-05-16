@@ -124,6 +124,7 @@ const Painel = () => {
         <Tabs defaultValue="anuncios">
           <TabsList className="mb-6">
             <TabsTrigger value="anuncios"><Megaphone className="mr-2 h-4 w-4" />Meus anúncios</TabsTrigger>
+            <TabsTrigger value="carrossel"><ImageIcon className="mr-2 h-4 w-4" />Carrossel</TabsTrigger>
             <TabsTrigger value="perfil"><User className="mr-2 h-4 w-4" />Perfil</TabsTrigger>
             <TabsTrigger value="destaque"><Star className="mr-2 h-4 w-4" />Destaque</TabsTrigger>
             <TabsTrigger value="doar"><Heart className="mr-2 h-4 w-4" />Apoiar</TabsTrigger>
