@@ -59,6 +59,25 @@ const Painel = () => {
     toast({ title: "Carrossel atualizado", description: "As imagens foram salvas." });
   };
 
+  const addSlide = () => {
+    if (slides.length >= 5) {
+      toast({ title: "Limite atingido", description: "Máximo de 5 slides.", variant: "destructive" });
+      return;
+    }
+    setSlides((prev) => [
+      ...prev,
+      { image: prev[0]?.image ?? "", lead: "Novo slide", highlight: "destaque." },
+    ]);
+  };
+
+  const removeSlide = (i: number) => {
+    if (slides.length <= 1) {
+      toast({ title: "Mantenha pelo menos 1 slide", variant: "destructive" });
+      return;
+    }
+    setSlides((prev) => prev.filter((_, idx) => idx !== i));
+  };
+
   const restoreCarousel = () => {
     resetSlides();
     setSlides(loadSlides());
