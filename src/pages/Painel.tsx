@@ -168,6 +168,62 @@ const Painel = () => {
             </div>
           </TabsContent>
 
+          {/* CARROSSEL */}
+          <TabsContent value="carrossel" className="space-y-4">
+            <div className="rounded-3xl border border-border/60 bg-card p-6 shadow-soft">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-semibold">Imagens do carrossel da home</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Atualize as 3 imagens e os textos que aparecem na página inicial.
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="rounded-full" onClick={restoreCarousel}>
+                    <RotateCcw className="mr-1 h-4 w-4" /> Restaurar
+                  </Button>
+                  <Button className="rounded-full shadow-glow" onClick={saveCarousel}>
+                    Salvar carrossel
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-6 md:grid-cols-3">
+                {slides.map((s, i) => (
+                  <div key={i} className="rounded-2xl border border-border/60 bg-background p-4">
+                    <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      Slide {i + 1}
+                    </div>
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
+                      <img src={s.image} alt={`Slide ${i + 1}`} className="h-full w-full object-cover" />
+                    </div>
+                    <label className="mt-3 flex cursor-pointer items-center justify-center gap-2 rounded-full border border-dashed border-border bg-muted/40 px-3 py-2 text-sm font-medium hover:bg-muted">
+                      <Upload className="h-4 w-4" /> Trocar imagem
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageUpload(i, e.target.files?.[0])}
+                      />
+                    </label>
+                    <div className="mt-3 space-y-2">
+                      <Label className="text-xs">Texto principal</Label>
+                      <Input
+                        value={s.lead}
+                        onChange={(e) => updateSlide(i, { lead: e.target.value })}
+                      />
+                      <Label className="text-xs">Destaque (gradiente)</Label>
+                      <Input
+                        value={s.highlight}
+                        onChange={(e) => updateSlide(i, { highlight: e.target.value })}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
           {/* PERFIL */}
           <TabsContent value="perfil">
             <div className="max-w-xl rounded-3xl border border-border/60 bg-card p-6 shadow-soft">
