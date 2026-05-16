@@ -11,6 +11,9 @@ import {
   Share2,
   Star,
   LogOut,
+  Image as ImageIcon,
+  Upload,
+  RotateCcw,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -21,6 +24,13 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { listings as mockListings } from "@/data/mock";
+import {
+  loadSlides,
+  saveSlides,
+  resetSlides,
+  fileToDataUrl,
+  type HeroSlide,
+} from "@/data/heroSlides";
 
 type AuthUser = { email: string; name: string };
 
