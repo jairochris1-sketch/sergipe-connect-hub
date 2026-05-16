@@ -38,6 +38,32 @@ const Painel = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [myListings] = useState(mockListings.slice(0, 2));
+  const [slides, setSlides] = useState<HeroSlide[]>(() => loadSlides());
+
+  const updateSlide = (i: number, patch: Partial<HeroSlide>) => {
+    setSlides((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)));
+  };
+
+  const handleImageUpload = async (i: number, file?: File | null) => {
+    if (!file) return;
+    if (file.size > 4 * 1024 * 1024) {
+      toast({ title: "Imagem muito grande", description: "Máximo 4MB.", variant: "destructive" });
+      return;
+    }
+    const dataUrl = await fileToDataUrl(file);
+    updateSlide(i, { image: dataUrl });
+  };
+
+  const saveCarousel = () => {
+    saveSlides(slides);
+    toast({ title: "Carrossel atualizado", description: "As imagens foram salvas." });
+  };
+
+  const restoreCarousel = () => {
+    resetSlides();
+    setSlides(loadSlides());
+    toast({ title: "Carrossel restaurado" });
+  };
 
   useEffect(() => {
     const raw = localStorage.getItem("ces_user");
